@@ -8,12 +8,17 @@ export const COMMISSION_PERCENT = 0.1
 export const CASHBACK_PERCENT = 0.1
 
 export class PurchaseService implements IPurchaseService {
-    buy(newPurchase: Purchase2Create, userId: string): Purchase | undefined {
+    private getData() {
         const data = BlockchainRepository.fetchLatest()
-        const users: User[] = data['users']
+        const users: User[] = data['users'] || []
+        const purchases: Purchase[] = data['purchases'] || []
+        return {data, users, purchases}
+    }
+
+    buy(newPurchase: Purchase2Create, userId: string): Purchase | undefined {
+        const {data, users, purchases} = this.getData()
         const user = users.find(user => user.id.localeCompare(userId) === 0)
         if (!user) return
-        const purchases: Purchase[] = data['purchases'] || []
         const purchase: Purchase = {
             ...newPurchase,
             id: randomUUID().toString(),
@@ -31,13 +36,11 @@ export class PurchaseService implements IPurchaseService {
     }
 
     fetchAllByUser(userId: string): Purchase[] {
-        const data = BlockchainRepository.fetchLatest()
-        const users: User[] = data['users']
+        const {data, users, purchases} = this.getData()
         const userExists = users.find(
             user => user.id.localeCompare(userId) === 0,
         )
         if (!userExists) return []
-        const purchases: Purchase[] = data['purchases'] || []
         return purchases.filter(
             purchase => purchase.userId.localeCompare(userId) === 0,
         )

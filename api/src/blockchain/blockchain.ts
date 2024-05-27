@@ -9,7 +9,7 @@ export class Blockchain {
     }
 
     private init() {
-        const genesis = new Block(0, new Date().getTime(), '0', 'genesis')
+        const genesis = new Block(0, new Date().getTime(), '0', '{}')
         genesis.proofOfWork(this.difficulty)
         this.chain.push(genesis)
     }

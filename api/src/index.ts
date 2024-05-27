@@ -1,16 +1,13 @@
 import 'dotenv/config'
+
+import cors from 'cors'
 import express from 'express'
-import {Blockchain} from './blockchain/blockchain'
+import {routes} from './routes'
 const app = express()
 const PORT = process.env.PORT || 3000
 
-app.get('/', (req, resp) => {
-    const blockchain = new Blockchain(2)
-    blockchain.addBlock(
-        blockchain.createBlock(JSON.stringify({name: 'Gabriel'})),
-    )
-    blockchain.addBlock(blockchain.createBlock(JSON.stringify({name: 'Lima'})))
-    return resp.json(blockchain)
-})
+app.use(express.json())
+app.use(cors())
+app.use(routes)
 
 app.listen(PORT)

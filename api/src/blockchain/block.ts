@@ -30,6 +30,10 @@ export class Block {
         return this.index
     }
 
+    public getData(): string {
+        return this.data
+    }
+
     public static calculateHash(block: Block): string {
         const newHash = createHash('SHA-256')
             .update(block.getContent())

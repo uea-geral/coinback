@@ -85,3 +85,15 @@ input.input::placeholder {
   font-size: var(--font-text);
   font-weight: medium;
 }
+
+* ::-webkit-scrollbar {
+  background-color: #f0f0f0;
+  width: 8px;
+  height: 8px;
+}
+
+* ::-webkit-scrollbar-thumb {
+  /* border-radius: 8px; */
+  background: #929292;
+  border-radius: 8px;
+}

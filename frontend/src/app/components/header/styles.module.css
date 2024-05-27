@@ -1,0 +1,15 @@
+.header {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header img {
+  width: 200px;
+  height: auto;
+}
+
+.header button {
+  width: fit-content;
+}

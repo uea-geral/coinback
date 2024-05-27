@@ -11,7 +11,13 @@ export default function LandingPage() {
   return (
     <div className={styles.landing_page}>
       <header>
-        <Image src="/coinback.svg" alt="coinback" width={200} height={200} />
+        <Image
+          src="/coinback.svg"
+          alt="coinback"
+          width={200}
+          height={200}
+          priority={true}
+        />
       </header>
       <main>
         <div>

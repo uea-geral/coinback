@@ -1,0 +1,11 @@
+.template {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  padding: 40px;
+  gap: 40px;
+}
+
+.template > main {
+  flex: 1;
+}

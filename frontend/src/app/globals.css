@@ -2,10 +2,98 @@
   --primary: #ffaf40;
   --secondary: #d35400;
   --bg: #ffe08d;
+  --font-title: 48pt;
+  --font-title-2: 36pt;
+  --font-title-3: 28pt;
+  --font-label: 14pt;
+  --font-text: 12pt;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.f-t1 {
+  font-size: var(--font-title);
+}
+
+.f-t2 {
+  font-size: var(--font-title-2);
+}
+
+.f-t3 {
+  font-size: var(--font-title-3);
+}
+
+.f-t {
+  font-size: var(--font-text);
+}
+
+.f-l {
+  font-size: var(--font-label);
+}
+
+.fw-b {
+  font-weight: bold;
+  color: var(--secondary);
+}
+
+button.primary {
+  width: 100%;
+  padding: 16px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: var(--secondary);
+  border: 1px solid transparent;
+  font-weight: bold;
+  font-size: 14pt;
+  cursor: pointer;
+}
+
+button.primary.outline,
+button.primary:hover {
+  background-color: #fff;
+  color: var(--secondary);
+  border: 1px solid var(--secondary);
+}
+
+button.primary.outline:hover {
+  color: #fff;
+  background-color: var(--secondary);
+}
+
+input.input {
+  width: 100%;
+  border-radius: 4px;
+  color: var(--secondary);
+  padding: 16px;
+  border: 1px solid var(--secondary);
+  font-size: var(--font-text);
+  outline-color: var(--secondary);
+}
+
+input.input::placeholder {
+  color: var(--secondary);
+  font-size: var(--font-text);
+  font-weight: medium;
+}
+
+* ::-webkit-scrollbar {
+  background-color: #f0f0f0;
+  width: 8px;
+  height: 8px;
+}
+
+* ::-webkit-scrollbar-thumb {
+  /* border-radius: 8px; */
+  background: #929292;
+  border-radius: 8px;
 }

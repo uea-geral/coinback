@@ -1,0 +1,21 @@
+.form {
+  width: 600px;
+  background-color: #fff;
+  border: 4px;
+  padding: 20px;
+  display: flex;
+  align-content: center;
+  gap: 40px;
+  flex-direction: column;
+}
+
+.input_group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form span {
+  text-decoration: underline;
+  cursor: pointer;
+}

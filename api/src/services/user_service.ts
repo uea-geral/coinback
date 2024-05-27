@@ -4,15 +4,19 @@ import {BlockchainRepository} from './blockchain_repository'
 import {IUserService} from './iuser_service'
 
 export class UserService implements IUserService {
-    fetchAll(): User[] {
+    private getData() {
         const data = BlockchainRepository.fetchLatest()
         const users: User[] = data['users'] || []
+        return {data, users}
+    }
+
+    fetchAll(): User[] {
+        const {users} = this.getData()
         return users
     }
 
     create(newUser: User2Create): User {
-        const data = BlockchainRepository.fetchLatest()
-        const users: User[] = data['users'] || []
+        const {data, users} = this.getData()
         const userExist = users.find(
             user => user.cpf.localeCompare(newUser.cpf) === 0,
         )
@@ -29,8 +33,7 @@ export class UserService implements IUserService {
     }
 
     findByCPFAndPassword(cpf: string, pass: string): User | undefined {
-        const data = BlockchainRepository.fetchLatest()
-        const users: User[] = data['users']
+        const {users} = this.getData()
         return users.find(
             user =>
                 user.cpf.localeCompare(cpf) === 0 &&

@@ -45,6 +45,14 @@ routes.get('/users', (_, resp) => {
     return resp.status(200).json(users)
 })
 
+routes.get('/users/:id', (req, resp) => {
+    const {id} = req.params
+    const users = userService.fetchAll()
+    const user = users.find(u => u.id.localeCompare(id) === 0)
+    if (!user) return resp.status(404).json({error: 'Usuário não existe'})
+    return resp.status(200).json(user)
+})
+
 routes.post(
     '/users/login',
     (req: Request<unknown, unknown, {cpf: string; pass: string}>, resp) => {

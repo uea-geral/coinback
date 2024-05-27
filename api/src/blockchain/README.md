@@ -1,10 +1,10 @@
 # Blockchain
 
-[] Criar estrutura do bloco
-[] Criar método de geração do _hash_
-[] Criar algoritmo _proof of work_
+Contém os métodos de:
 
-[] Criar estrutura da _blockchain_
-[] Criar método de adicionar um novo bloco
-[] Criar método de buscar por um bloco
-[] Criar método de verificação de validade de _blockchain_
+-   criar um bloco;
+-   gerar o _hash_ de um bloco;
+-   executar o algoritmo _proof of work_;
+-   adicionar um novo bloco em uma _blockchain_;
+-   criar uma _blockchain_;
+-   verificar a validade de _blockchain_.

@@ -1,0 +1,15 @@
+.footer {
+  margin-top: auto;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary);
+  background-color: transparent;
+  font-weight: bold;
+}
+
+.footer img {
+  width: 100px;
+  height: auto;
+}

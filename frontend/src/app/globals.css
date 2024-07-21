@@ -93,7 +93,6 @@ input.input::placeholder {
 }
 
 * ::-webkit-scrollbar-thumb {
-  /* border-radius: 8px; */
   background: #929292;
   border-radius: 8px;
 }

@@ -1,6 +1,6 @@
 "use client";
-import { api } from "@/app/api";
-import { User } from "@/app/entities/user";
+import { useNotification } from "@/app/hooks/useNotification";
+import { UserService } from "@/app/services/api/user_service";
 import { useRouter } from "next/navigation";
 import styles from "./styles.module.css";
 
@@ -8,23 +8,30 @@ interface Props {
   redirect2Create: () => void;
 }
 
+export const userService = new UserService();
+
 export default function FormLogin({ redirect2Create }: Props) {
   const router = useRouter();
+  const { pushNotification } = useNotification();
 
   async function handleSubmit(data: FormData) {
-    const rawData = {
-      cpf: data.get("cpf"),
-      pass: data.get("pass"),
-    };
-    try {
-      const { status, data: responseData } = await api.post<User>(
-        `/users/login`,
-        rawData
+    const cpf = data.get("cpf")?.toString();
+    const pass = data.get("pass")?.toString();
+
+    if (!cpf || !pass)
+      return pushNotification(
+        { message: "Preencha todos os campos.", type: "warning" },
+        true
       );
-      localStorage.setItem("auth", responseData.id);
+
+    try {
+      await userService.login({ cpf, pass });
       router.push("/home");
     } catch (error) {
-      alert("Usuário e/ou senha incorretos.");
+      pushNotification(
+        { message: "Usuário e/ou senha incorretos.", type: "error" },
+        true
+      );
     }
   }
 

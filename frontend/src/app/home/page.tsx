@@ -1,62 +1,65 @@
 "use client";
 
 import Link from "next/link";
-import useSWR from "swr";
-import { api } from "../api";
+import { useEffect, useState } from "react";
 import { Purchase } from "../entities/purchase";
-import { User } from "../entities/user";
+import { ProductService } from "../services/api/product_service";
+import { UserService } from "../services/api/user_service";
 import styles from "./page.module.css";
 
-export default function HomePage() {
-  let id: string | null | undefined = "";
-  if (typeof window !== "undefined") {
-    id = localStorage.getItem("auth");
-  }
-  const { data, error, isLoading } = useSWR<{ data: Purchase[] }>(
-    `/users/${id}/purchases`,
-    api.get
-  );
-  const { data: dataUser } = useSWR<{ data: User }>(`/users/${id}`, api.get);
+const userService = new UserService();
+const productService = new ProductService();
 
-  const total = (data?.data || [])
-    .map((p) => p.value)
-    .reduce((p, c) => c + p, 0);
-  const cashback = dataUser?.data.cashback || 0;
+export default function HomePage() {
+  const [data, setData] = useState<Purchase[]>();
+  const [total, setTotal] = useState<number>();
+  const [cashback, setCashback] = useState<number>();
+  const isLoading = data === undefined;
+
+  useEffect(() => {
+    async function fetch() {
+      const id = localStorage.getItem("auth");
+
+      if (!id) return;
+
+      const [user, products] = await Promise.all([
+        userService.findById(id),
+        productService.fetch(id),
+      ]);
+
+      setData(products);
+      setCashback(user.cashback);
+      setTotal(products.map((p) => p.value).reduce((p, c) => c + p, 0));
+    }
+
+    fetch();
+  }, []);
 
   function renderPurchase(purchase: Purchase, index: number) {
     return (
       <li key={`${purchase.id}`}>
         <label>{purchase.product_name}</label>
-        <label>R${formatCurrency(purchase.value)}</label>
+        <label>{purchase.value} ETH</label>
       </li>
     );
-  }
-
-  function formatCurrency(value: number) {
-    return Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })
-      .format(value)
-      .replace("R$", "");
   }
 
   return (
     <main className={styles.page}>
       <div className={styles.inline}>
         <div className={styles.card_primary}>
-          <label className="f-t2">
-            <label className="f-t3">R$</label>
-            {formatCurrency(cashback)}
+          <label className="f-t3">
+            {cashback || "Carregando..."}
+            {cashback && <label className="f-l"> ETH</label>}
           </label>
-          <label className="f-l">de retorno (cashback)</label>
+          {cashback && <label className="f-l">de retorno (cashback)</label>}
         </div>
         <div className={styles.card_primary_outline}>
-          <label className="f-t2">
-            <label className="f-t3">R$</label>
-            {formatCurrency(total)}
+          <label className="f-t3">
+            {total || "Carregando..."}
+            {total && <label className="f-l "> ETH</label>}
           </label>
-          <label className="f-l">em compras na plataforma</label>
+          {total && <label className="f-l">em compras na plataforma</label>}
         </div>
       </div>
 
@@ -75,8 +78,8 @@ export default function HomePage() {
             <label>Carregando...</label>
           </li>
         )}
-        {!isLoading && data && data.data.length != 0 ? (
-          data.data.map(renderPurchase)
+        {!isLoading && data && data.length != 0 ? (
+          data.map(renderPurchase)
         ) : (
           <li>
             <label>Sem compras realizadas.</label>

@@ -1,0 +1,69 @@
+.notification-stack {
+  position: fixed;
+  top: 12px;
+  margin: 0 auto;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  width: 50%;
+}
+
+.notification-stack .notification {
+  --bg-color: white;
+  background-color: var(--bg-color);
+  padding: 8px;
+  width: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  animation: in 0.5s backwards;
+  color: white;
+}
+
+.notification-stack .notification .close {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.notification-stack .notification {
+  color: var(--svg-color);
+}
+
+.notification-stack .notification svg {
+  color: var(--svg-color);
+  width: 50px;
+}
+
+.notification-stack .notification.success {
+  --svg-color: #19340c;
+  --bg-color: #6ab04c;
+}
+
+.notification-stack .notification.info {
+  --svg-color: #2b2d2d;
+  --bg-color: #ccd3d6;
+}
+
+.notification-stack .notification.warning {
+  --svg-color: #3d3308;
+  --bg-color: #f9ca24;
+}
+
+.notification-stack .notification.error {
+  --svg-color: #ffffff;
+  --bg-color: #d63031;
+}
+
+@keyframes in {
+  from {
+    transform: translateY(-100px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}

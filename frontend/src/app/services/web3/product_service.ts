@@ -35,6 +35,6 @@ export class Web3ProductService implements IProductService {
   async fetch(id: string): Promise<Purchase[]> {
     const contract = this.getContract();
     const purchases = await contract.methods.getPurchases().call();
-    return purchases.filter((p) => p.user == id);
+    return purchases.filter((p) => p.user === id);
   }
 }

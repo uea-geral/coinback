@@ -27,7 +27,6 @@ export default function HomePage() {
         userService.getUserByAddress(accounts[0]),
         productService.fetch(accounts[0]),
       ]);
-      console.log(foundUser);
       setData(products);
       setCashback(Number(foundUser.cashback));
       setTotal(products.map((p) => Number(p.value)).reduce((p, c) => c + p, 0));

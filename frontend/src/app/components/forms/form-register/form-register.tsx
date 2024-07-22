@@ -1,17 +1,18 @@
 import { useNotification } from "@/app/hooks/useNotification";
-import { UserService } from "@/app/services/api/user_service";
+import { useWeb3 } from "@/app/hooks/useWeb3";
+import { Web3UserService } from "@/app/services/web3/user_service";
 import styles from "./styles.module.css";
 
 interface Props {
   redirect2Login: () => void;
 }
 
-const userService = new UserService();
-
 export default function FormRegister({ redirect2Login }: Props) {
   const { pushNotification } = useNotification();
+  const { provider, accounts } = useWeb3();
 
   async function handleSubmit(data: FormData) {
+    if (!provider) return;
     const cpf = data.get("cpf")?.toString();
     const pass = data.get("pass")?.toString();
     const name = data.get("name")?.toString();
@@ -26,6 +27,7 @@ export default function FormRegister({ redirect2Login }: Props) {
       );
 
     try {
+      const userService = new Web3UserService(provider, accounts[0]);
       await userService.create({ cpf, pass, name });
       redirect2Login();
       pushNotification(

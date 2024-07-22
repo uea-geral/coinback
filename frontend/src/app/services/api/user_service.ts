@@ -10,11 +10,11 @@ export class UserService implements IUserService {
 
   async login(user: { cpf: string; pass: string }) {
     const { data } = await api.post<User>(`/users/login`, user);
-    localStorage.setItem("auth", data.id);
+    localStorage.setItem("auth", JSON.stringify(data));
     return data;
   }
 
-  async findById(id: string): Promise<User> {
+  async getUserByAddress(id: string): Promise<User> {
     const { data } = await api.get<User>(`/users/${id}`);
     return data;
   }
